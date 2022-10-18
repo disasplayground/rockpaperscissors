@@ -1,51 +1,56 @@
-let user = (prompt("Type Rock/Paper/Scissors!")).toLowerCase();
+let user = "";
+let play = ["rock", "paper", "scissors"];
 
-game();
+
+function start() {
+
+    user = (prompt("Type Rock/Paper/Scissors!")).toLowerCase();
+    return user;
+
+};
+
 
 function game() {
 
     let number = Math.ceil(Math.random()*3);
-    let computer = "";
+    let computer = play[number];
 
-    switch(number) {
-        case 1:
-            computer = "rock";
-            break;
-        case 2:
-            computer = "paper";
-            break;
-        case 3:
-            computer = "scissors";
-            break;
-    };
-
- 
     let win = "Computer plays " + computer + ". You win!";
     let lose = "Computer plays " + computer + ". You lose!";
     let draw = "Computer plays " + computer + ". It's a draw!"
 
-
-    if (computer === user) {
+    if (user === computer) {
         alert(draw)
     } else {
-        if (computer === "rock") {
-            if (user === "paper") {
-                alert(win)
-            } else {
-                alert(lose)
+        if (user === "rock") {
+            switch(computer) {
+                case "paper":
+                    alert(lose);
+                    break;
+                case "scissors":
+                    alert(win);
+                    break;
             }
-        } if (computer === "paper") {
-            if (user === "rock") {
-                alert(lose)
-            } else {
-                alert(win)
+        } if (user === "paper") {
+            switch(computer) {
+                case "scissors":
+                    alert(lose);
+                    break;
+                case "rock":
+                    alert(win);
+                    break;
             }
-        } if (computer === "scissors") {
-            if (user === "paper") {
-                alert(lose)
-            } else {
-                alert(win)
+        } if (user === "scissors") {
+            switch(computer) {
+                case "rock":
+                    alert(lose);
+                    break;
+                case "paper":
+                    alert(win);
+                    break;
             }
+        } else {
+            alert("What is that.")
         }
     };
 
