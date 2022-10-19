@@ -2,6 +2,7 @@ let user = "";
 let play = ["rock", "paper", "scissors"];
 let computerScore = 0;
 let userScore = 0;
+let repeat = false;
 
 
 function round() {
@@ -15,38 +16,40 @@ function round() {
     let lose = "Computer plays " + computer + ". You lose!";
     let draw = "Computer plays " + computer + ". It's a draw!";
 
-    if (user === computer) {
-        alert(draw)
+    if (play.includes(user)) {
+        if (user === computer) {
+            alert(draw)
+        } else {
+            if (user === "rock") {
+                if (computer === "paper") {
+                    computerScore++;
+                    alert(lose);
+                } else {
+                    userScore++;
+                    alert(win);
+                } 
+            } if (user === "paper") {
+                if (computer === "scissors") {
+                    computerScore++;
+                    alert(lose);
+                } else {
+                    userScore++;
+                    alert(win);
+                } 
+            } if (user === "scissors") {
+                if (computer === "rock") {
+                    computerScore++;
+                    alert(lose);
+                } else {
+                    userScore++;
+                    alert(win);
+                } 
+            }
+        }
     } else {
-        if (user === "rock") {
-            if (computer === "paper") {
-                computerScore++;
-                alert(lose);
-            } else {
-                userScore++;
-                alert(win);
-            } 
-        } if (user === "paper") {
-            if (computer === "scissors") {
-                computerScore++;
-                alert(lose);
-            } else {
-                userScore++;
-                alert(win);
-            } 
-        } if (user === "scissors") {
-            if (computer === "rock") {
-                computerScore++;
-                alert(lose);
-            } else {
-                userScore++;
-                alert(win);
-            } 
-        } if (user !== "rock" && user !== "paper" && user !== "scissors") {
-            alert("What is that.")
-        };
+        alert("What is that.");
+        repeat = !repeat;
     };
-
 };
 
 
@@ -54,7 +57,14 @@ function game() {
 
     for (let i = 0; i < 5; i++) {
         
+        let n = i;
+
         round();
+
+        if (repeat) {
+            i--;
+            repeat = !repeat;
+        }
 
         if (i === 4) {
             if (computerScore > userScore) {
