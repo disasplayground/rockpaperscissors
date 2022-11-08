@@ -1,82 +1,91 @@
-let user = "";
-let play = ["rock", "paper", "scissors"];
-let computerScore = 0;
-let userScore = 0;
-let repeat = false;
-
-
-function round() {
-
-    user = (prompt("Computer: " + computerScore + " | You: " + userScore + "\nType Rock/Paper/Scissors!")).toLowerCase();
-
-    let number = Math.floor(Math.random()*3);
-    let computer = play[number];
-
-    let win = "Computer plays " + computer + ". You win!";
-    let lose = "Computer plays " + computer + ". You lose!";
-    let draw = "Computer plays " + computer + ". It's a draw!";
-
-    if (play.includes(user)) {
-        if (user === computer) {
-            alert(draw)
-        } else {
-            if (user === "rock") {
-                if (computer === "paper") {
-                    computerScore++;
-                    alert(lose);
-                } else {
-                    userScore++;
-                    alert(win);
-                } 
-            } if (user === "paper") {
-                if (computer === "scissors") {
-                    computerScore++;
-                    alert(lose);
-                } else {
-                    userScore++;
-                    alert(win);
-                } 
-            } if (user === "scissors") {
-                if (computer === "rock") {
-                    computerScore++;
-                    alert(lose);
-                } else {
-                    userScore++;
-                    alert(win);
-                } 
-            }
-        }
-    } else {
-        alert("What is that.");
-        repeat = !repeat;
+const playerButtons = document.querySelectorAll(".selection");
+let rps = ["Rock", "Paper", "Scissors"];
+let result = document.getElementById("result");
+let score = document.getElementById("score");
+let game = {
+    round: 0,
+    computerScore: 0,
+    userScore: 0
     };
+
+
+playerButtons.forEach(button => {
+
+    button.addEventListener("click", function() {
+        let playerSelection = this.innerHTML;
+        let computerSelection = rps[Math.floor(Math.random()*3)];
+        game.round++;
+        playerRound(playerSelection, computerSelection);
+    });
+
+});
+
+
+function playerRound(user, computer) {
+
+
+    let gameText = "Computer plays " + computer + ". ";
+
+    let lose = () => {
+        result.innerText = gameText + "You lose!";
+        game.computerScore++;
+    };
+
+    let win = () => {
+        result.innerText = gameText + "You win!";
+        game.userScore++;
+    };
+
+    let draw = () => {
+        result.innerText = gameText + "It's a draw!";
+    };
+
+
+    if (user !== computer) {
+        if (user === "Rock") {
+            computer === "Paper" ? lose() : win();
+        } if (user === "Paper") {
+            computer === "Scissors" ? lose() : win();
+        } if (user === "Scissors") {
+            computer === "Rock" ? lose() : win();
+        };
+    } else {
+        draw();
+    };
+
+
+    count(game.round, game.computerScore, game.userScore);
+
+    
 };
 
 
-function game() {
+function count(round, comp, user) {
 
-    for (let i = 0; i < 5; i++) {
-        
-        let n = i;
+    let scoreCard = "Round: " + game.round + " | Computer: " + game.computerScore + " | Player: " + game.userScore;
 
-        round();
-
-        if (repeat) {
-            i--;
-            repeat = !repeat;
-        }
-
-        if (i === 4) {
-            if (computerScore > userScore) {
-                alert("Computer: " + computerScore + " | You: " + userScore + "\nYou lose.")
-            } if (computerScore < userScore) {
-                alert("Computer: " + computerScore + " | You: " + userScore + "\nYou lose.")
-            } if (computerScore === userScore) {
-                alert("It's a draw!")
-            }
+    if (round < 5) {
+        score.innerText = scoreCard;
+    } if (round === 5) {
+        if (comp > user) {
+            score.innerText = scoreCard + ". You lose!";
+        } if (comp < user) {
+            score.innerText = scoreCard + ". You win!";
+        } if (comp === user) {
+            score.innerText = scoreCard + ". It's a draw!";
         };
     };
 
+        
+    if (game.round === 5) {
+        game = {
+            round: 0,
+            computerScore: 0,
+            userScore: 0
+        };
+    };
+    
 };
 
-game();
+
+
